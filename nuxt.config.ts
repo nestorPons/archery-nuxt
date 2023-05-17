@@ -6,11 +6,13 @@ export default defineNuxtConfig({
             {
               rel: "stylesheet",
               href: "",
+              crossorigin: "anonymous",
+              body: true
             },
           ],
         },
       },
     modules: [
         '@nuxtjs/tailwindcss',
-    ],
+    ]
 })
