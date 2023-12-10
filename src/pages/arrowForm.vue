@@ -82,7 +82,7 @@
         </form>
 
         <p>Edad: {{ edad }}</p>
-        <p>Longitud: {{ longitud }}</p>
+        <p>Longitud: {{ longitudes.cm }}</p>
         <p>Unidad de longitud: {{ lenghtUnit }}</p>
         <p>Tipo de arco: {{ tipoArco }}</p>
         <p>Potencia: {{ potenciaTotal }}</p>
