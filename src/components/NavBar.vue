@@ -56,11 +56,11 @@
         <div class="sm:hidden" id="mobile-menu" v-show="isMobileMenuOpen">
             <div class="space-y-1 px-2 pb-3 pt-2">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <NuxtLink href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                <NuxtLink href="/" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
                     aria-current="page">{{ $text('Home') }}</NuxtLink>
-                <NuxtLink href="#"
+                <NuxtLink href="/archForm"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $text('Archs') }}</NuxtLink>
-                <NuxtLink href="#"
+                <NuxtLink href="/arrowForm"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $text('Arrows') }}</NuxtLink>
               
             </div>
