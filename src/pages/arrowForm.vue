@@ -78,17 +78,17 @@
                         class="w-full border-gray-300 rounded-md px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
-
         </form>
-
-        <p>Edad: {{ edad }}</p>
-        <p>Longitud: {{ longitudes.cm }}</p>
-        <p>Unidad de longitud: {{ lenghtUnit }}</p>
-        <p>Tipo de arco: {{ tipoArco }}</p>
-        <p>Potencia: {{ potenciaTotal }}</p>
-        <div v-if="flechaRecomendada" class="mt-8">
-            <h3 class="text-xl font-bold mb-2">Flecha Recomendada:</h3>
-            <p>{{ flechaRecomendada }}</p>
+        <div class="border-2 drop-shadow bg-red p-5 w-100">
+            <p>Edad: {{ edad }}</p>
+            <p>Longitud: {{ longitudes.cm }}</p>
+            <p>Unidad de longitud: {{ lenghtUnit }}</p>
+            <p>Tipo de arco: {{ tipoArco }}</p>
+            <p>Potencia: {{ potenciaTotal }}</p>
+            <div v-if="flechaRecomendada" class="mt-8">
+                <h3 class="text-xl font-bold mb-2">Flecha Recomendada:</h3>
+                <p>{{ flechaRecomendada }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -141,7 +141,7 @@
         const supFismele = fismele.value < 6.5 ? 5 : 0 ;
         return potencia.value + supSuelta + supPesoPunta + supFismele
     }else{
-        return potencia
+        return potencia.value
     }
   })
   const apertura = ref(long.in);
@@ -211,11 +211,6 @@
     opacity: 0
 }
 
-* {
-    @media (max-width: 500px) {
-        width: 100%;
-    }
-}
 
 .items-center {
     padding: 1rem;
