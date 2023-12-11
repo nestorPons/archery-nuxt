@@ -174,7 +174,17 @@ function submitForm(event) {
         width: 100%;
     }
 }
+.arrow-long{
+    position: relative;
+    .other-unit{
+        position: absolute;
+        top: 1.5rem;
+        right: 1rem;
+        color: gray;
+    }
+}
 </style>
+
 <template>
     <div class="flex flex-col items-center">
         <h2 class="text-xl uppercase font-bold mb-4 pb-10 text-center">{{ $text('Arrow Selection Form') }}</h2>
@@ -201,6 +211,7 @@ function submitForm(event) {
                         <img v-if="showHelp" src="/img/medicion.png" />
                     </transition>
                 </div>
+            <div class="arrow-long">
                 <input type="number" v-model="longitudes" required
                     class="w-full border-gray-300 rounded-md px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <div class="sel-width radio-options">
@@ -212,12 +223,13 @@ function submitForm(event) {
                         <input id="unit1" type="radio" name="unit-width" value="1" v-model="lenghtUnit">
                         <span for="unit1">{{ $text('Inches') }}</span>
                     </label>
-                    <p>{{ textChangeUnit }}</p>
                 </div>
+                <p class="other-unit">{{ textChangeUnit }}</p>
+            </div>
 
             </div>
             <div class="component">
-                <label for="potencia" class="mb-2">Potencia en libras:</label>
+                <label for="potencia" class="mb-2">{{ $text('Bow power in pounds') }}:</label>
                 <input type="number" v-model="potencia" required
                     class="w-full border-gray-300 rounded-md px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>

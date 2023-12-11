@@ -1,11 +1,11 @@
 <template>
-    <nav class="bg-gray-900">
+    <nav class="bg-blue-900">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button-->
                     <button type="button" @click="isMobileMenuOpen = !isMobileMenuOpen"
-                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                         aria-controls="mobile-menu" aria-expanded="false">
                         <span class="absolute -inset-0.5"></span>
                         <span class="sr-only">Open main menu</span>
@@ -37,13 +37,13 @@
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
-                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <NuxtLink to="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                            <!-- Current: "bg-blue-900 text-white", Default: "text-blue-300 hover:bg-blue-700 hover:text-white" -->
+                            <NuxtLink to="#" class="bg-blue-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                                 aria-current="page"> {{ $text('Home') }}</NuxtLink>
                             <NuxtLink to="/archForm"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Archs</NuxtLink>
+                                class="text-blue-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Archs</NuxtLink>
                             <NuxtLink to="/arrowForm"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Arrows</NuxtLink>
+                                class="text-blue-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Arrows</NuxtLink>
 
                         </div>
                     </div>
@@ -55,13 +55,13 @@
         <!-- Mobile menu, show/hide based on menu state. -->
         <div class="sm:hidden" id="mobile-menu" v-show="isMobileMenuOpen">
             <div class="space-y-1 px-2 pb-3 pt-2">
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <NuxtLink href="/" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                <!-- Current: "bg-blue-900 text-white", Default: "text-blue-300 hover:bg-blue-700 hover:text-white" -->
+                <NuxtLink href="/" class="bg-blue-900 text-white block rounded-md px-3 py-2 text-base font-medium"
                     aria-current="page">{{ $text('Home') }}</NuxtLink>
                 <NuxtLink href="/archForm"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $text('Archs') }}</NuxtLink>
+                    class="text-blue-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $text('Archs') }}</NuxtLink>
                 <NuxtLink href="/arrowForm"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $text('Arrows') }}</NuxtLink>
+                    class="text-blue-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $text('Arrows') }}</NuxtLink>
               
             </div>
         </div>
