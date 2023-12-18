@@ -1,23 +1,31 @@
 <style scoped>
 /* Estilos para la transición de deslizamiento */
-.slide-enter-active, .slide-leave-active {
-  transition: transform 0.2s ease-in-out; /* Ajusta la duración y la función de tiempo aquí */
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.2s ease-in-out;
+    /* Ajusta la duración y la función de tiempo aquí */
 }
-.slide-enter-from, .slide-leave-to {
-  transform: translateX(-100%); /* Desplaza el menú completamente fuera de la pantalla */
+
+.slide-enter-from,
+.slide-leave-to {
+    transform: translateX(-100%);
+    /* Desplaza el menú completamente fuera de la pantalla */
 }
-.slide-enter-to, .slide-leave-from {
-  transform: translateX(0); /* Restaura el menú a su posición original */
+
+.slide-enter-to,
+.slide-leave-from {
+    transform: translateX(0);
+    /* Restaura el menú a su posición original */
 }
 </style>
 <template>
-    <nav class="bg-blue-900 py-4">
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <nav class="bg-cyan-950 py-4">
+        <div class="mx-auto max-w-lg px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button-->
                     <button type="button" @click="isMobileMenuOpen = !isMobileMenuOpen"
-                        class="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-cyan-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                         aria-controls="mobile-menu" aria-expanded="false">
                         <span class="absolute -inset-0.5"></span>
                         <span class="sr-only">Open main menu</span>
@@ -46,22 +54,34 @@
                     <div class="flex flex-shrink-0 items-center">
                         <img class="h-22 w-auto" src="/img/logo-light.png" alt="Your Company">
                     </div>
-                    <div class="hidden sm:ml-6 sm:block">
-                        <div class="flex space-x-4">
-                            <!-- Current: "bg-blue-900 text-white", Default: "text-blue-300 hover:bg-blue-700 hover:text-white" -->
-                            <NuxtLink to="#" class="bg-blue-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                aria-current="page" @click="closeMobileMenu"> {{ $text('Home') }}</NuxtLink>
-                            <NuxtLink to="/archForm"
-                                class="text-blue-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+
+                    <div class="hidden sm:ml-6 sm:block lg:flex">
+                        <div class="m-auto ">
+                            <!-- Current: "bg-cyan-950 text-white", Default: "text-blue-300 hover:bg-cyan-700 hover:text-white" -->
+                            <NuxtLink to="/" class="bg-cyan-950 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                aria-current="page" 
                                 @click="closeMobileMenu">
-                                Archs</NuxtLink>
-                            <NuxtLink to="/arrowForm"
-                                class="text-blue-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                {{ $text('Home') }}
+                            </NuxtLink>
+                            <NuxtLink to="/featuresForm"
+                                class="text-blue-300 hover:bg-cyan-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                                 @click="closeMobileMenu">
-                                Arrows</NuxtLink>
+                                {{ $text('features') }}
+                            </NuxtLink>
+                            <NuxtLink to="/recommendations"
+                                class="text-blue-300 hover:bg-cyan-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                @click="closeMobileMenu">
+                                {{ $text('recommendatios') }}
+                            </NuxtLink>
 
                         </div>
                     </div>
+                </div>
+                <div>
+                    <ClientOnly>
+                        <UButton :icon="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'" color="gray"
+                            variant="ghost" aria-label="Theme" @click="isDark = !isDark" />
+                    </ClientOnly>
                 </div>
 
             </div>
@@ -70,19 +90,23 @@
             <!-- Mobile menu, show/hide based on menu state. -->
             <div class="sm:hidden" id="mobile-menu" v-show="isMobileMenuOpen">
                 <div class="space-y-1 px-2 pb-3 pt-2">
-                    <!-- Current: "bg-blue-900 text-white", Default: "text-blue-300 hover:bg-blue-700 hover:text-white" -->
-                    <NuxtLink href="/" class="bg-blue-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-                        aria-current="page" @click="closeMobileMenu">{{ $text('Home') }}</NuxtLink>
-                    <NuxtLink href="/featuresForm" class="bg-blue-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-                        aria-current="page" @click="closeMobileMenu">{{ $text('Features') }}</NuxtLink>
-                    <NuxtLink href="/archForm"
-                        class="text-blue-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                    <NuxtLink to="/" 
+                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
+                        aria-current="page" 
                         @click="closeMobileMenu">
-                        {{ $text('bows') }}</NuxtLink>
-                    <NuxtLink href="/arrowForm"
-                        class="text-blue-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        {{ $text('Home') }}
+                    </NuxtLink>
+                    <NuxtLink to="/featuresForm"
+                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium" 
+                        aria-current="page"
                         @click="closeMobileMenu">
-                        {{ $text('Arrows') }}</NuxtLink>
+                        {{ $text('Features') }}
+                    </NuxtLink>
+                    <NuxtLink to="/recommendations"
+                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
+                        @click="closeMobileMenu">
+                        {{ $text('recommendations') }}
+                    </NuxtLink>
 
                 </div>
             </div>
@@ -92,10 +116,21 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    const isMobileMenuOpen = ref(false);
-    function closeMobileMenu() {
-        isMobileMenuOpen.value = false;
+import { ref } from 'vue';
+const isMobileMenuOpen = ref(false);
+function closeMobileMenu() {
+    isMobileMenuOpen.value = false;
+}
+
+const colorMode = useColorMode()
+
+const isDark = computed({
+    get() {
+        return colorMode.value === 'dark'
+    },
+    set() {
+        colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
     }
+})
 </script>
 

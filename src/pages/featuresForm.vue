@@ -22,12 +22,23 @@ const items = [{
   slot: 'arrow'
 
 }]
-
 const age = useLocalStorage('age');
 const length = useLocalStorage('length');
 const gender = useLocalStorage('gender');
 const span = useLocalStorage('span');
 const bowSize = length => length / 2.5
+const bowType = useLocalStorage('bowType');
+const power = useLocalStorage('power');
+const showHelp = ref(false);
+const lenghtUnit = ref(0);
+const pointWeight = useLocalStorage('pointWeight');
+const fismele = useLocalStorage('fismele');
+const level = useLocalStorage('level');
+let storedArrowLength = 0.0
+const long = reactive({
+    in: storedArrowLength,
+    cm: (storedArrowLength * 2.54).toFixed(2)
+})
 
 function rangeWeigth(age, gender)
 {
@@ -46,25 +57,31 @@ function rangeWeigth(age, gender)
         }
 } 
 
-const recommendedPower = computed(() => rangeWeigth(age.value, gender.value));
+const recommendedPower = computed(() => {
+    let a = parseInt(age.value)
+    switch (true){
+        case a <= 12: 
+        return '10-15'    
+        case a > 12 & a <= 15:
+            return '15-20'
+            case gender.value == 2:
+                return '20-25'
+                case gender.value == 1:
+                    return '20-35'
+        default:
+            return 'S/N'
+        }
+});
 const recommendedLength = computed(() => bowSize(length.value));
-
-
-watch(recommendedPower, (newValue) => {
-  localStorage.setItem('recommendedPower', newValue);
-});
-
-watch(recommendedLength, (newValue) => {
-    localStorage.setItem('recommendedLength', newValue);
-});
-
-
-const long = reactive({
-    in: 28.35,
-    cm: 72
+const recommendedFismele = computed( () => {
+    switch(bowType.value){
+        case 'recurve':     return 8.5
+        case 'longbow':     return 7
+        case 'traditional': return 5
+        default:            return 9
+    }
 })
-const edad = useLocalStorage('age');
-const longitudes = computed({
+const computedArrowLength = computed({
     get() {
         return lenghtUnit.value == 1 ? long.in : long.cm
     },
@@ -83,15 +100,18 @@ const longitudes = computed({
 
     }
 });
-const bowType = useLocalStorage('bowType');
-const power = useLocalStorage('power');
-const potencia = ref(30);
-const showHelp = ref(false);
-const lenghtUnit = ref(0);
-const suelta = ref(1);
-const pointWeight = useLocalStorage('pointWeight');
-const fismele = useLocalStorage('fismele');
-const drawLegth = useLocalStorage('drawLegth');
+
+watch(computedArrowLength, () => {
+  localStorage.setItem('arrowLength', long.in);
+});
+
+watch(recommendedPower, (newValue) => {
+  localStorage.setItem('recommendedPower', newValue);
+});
+
+watch(recommendedLength, (newValue) => {
+    localStorage.setItem('recommendedLength', newValue);
+});
 
 const flechaRecomendada = ref(null);
 const textChangeUnit = computed(() =>
@@ -99,29 +119,30 @@ const textChangeUnit = computed(() =>
         `${long.cm}  ${$text('centimeters')}` :
         `${long.in} ${$text('inches')}`
 )
-const potenciaTotal = computed(() => {
+const totalPower = computed((power) => {
     if (bowType == 'compound') {
         // Suplemento de 5lbs si la suelta es con los dedos
         const supSuelta = suelta.value == 1 ? 5 : 0;
         // Suplemento de 3lbd por cada 25 grains a partir de 100 grains 
         const suppointWeight = Math.ceil((pointWeight.value - 100) / 25) * 3;
         const supFismele = fismele.value < 6.5 ? 5 : 0;
-        return potencia.value + supSuelta + suppointWeight + supFismele
+        return power + supSuelta + suppointWeight + supFismele
     } else {
-        return potencia.value
+        return power
     }
 })
-const recommendedFismele = computed((bowType) => {
-    switch(bowType){
-        case 'recurve': return 8,5
-        case 'longbow': return 7
-        case 'traditional': return 5
-        default: return 9
-    }
-})
+
+onMounted(() => {
+  if (process.client) {
+    const value = localStorage.getItem('arrowLength')
+    storedArrowLength = value ? parseFloat(value).toFixed(2) : 0
+    long.in = storedArrowLength
+    long.cm = (storedArrowLength * 2.54).toFixed(2)
+  }
+});
 </script>
 <template>
-    <UAccordion :items="items" class="mt-1">
+    <UAccordion :items="items" class="mt-1 max-w-sm m-auto my-2 bg-zinc-900">
 
         <template #personal>
             <div class="container">
@@ -164,7 +185,23 @@ const recommendedFismele = computed((bowType) => {
                         <span class="caption">{{ $text('cm') }}</span>
                     </label>
                 </div>
+                <div class="component">
+                    <label class="">
+                        <span class="label">{{ $text('level') }}</span>
+                        <div class="select-container">
+                            <select class="select form-input" v-model="level">
+                                <option value="beginner">{{ $text('beginner') }}</option>
+                                <option value="amateur">{{ $text('amateur') }}</option>
+                            </select>
+                            <div class="select-decorator-container">
+                                <svg class="select-decorator" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                </svg>
+                            </div>
+                        </div>
 
+                    </label>
+                </div>
             </div>
         </template>
 
@@ -172,7 +209,7 @@ const recommendedFismele = computed((bowType) => {
             <div class="container">
                 <div class="component">
                     <div class="width-arrow">
-                        <label for="longitud" class="label">{{ $text('Arrow Length') }}:</label>
+                        <label for="longitud" class="label">{{ $text('draw length') }}:</label>
                         <div class="medition" @click="showHelp = !showHelp">
                             <div class="icon-question">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -188,7 +225,7 @@ const recommendedFismele = computed((bowType) => {
                         </transition>
                     </div>
                     <div class="arrow-long">
-                        <input type="number" v-model="longitudes" class="form-input">
+                        <input type="number" v-model="computedArrowLength" class="form-input">
                         <div class="sel-width radio-options">
                             <label>
                                 <input id="unit0" type="radio" name="unit-width" value="0" v-model="lenghtUnit">
@@ -226,10 +263,7 @@ const recommendedFismele = computed((bowType) => {
                     </div>
 
                     <div v-if="bowType == 'recurve'">
-                        <label>
-                            <span class="label">{{ $text('draw length') }}</span>
-                            <input type="number" v-model="drawLegth" class="form-input">
-                        </label>
+
                     </div>
                     <div v-if="bowType == 'compound'">
                         <label>
