@@ -1,5 +1,17 @@
+<style scoped>
+/* Estilos para la transición de deslizamiento */
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.2s ease-in-out; /* Ajusta la duración y la función de tiempo aquí */
+}
+.slide-enter-from, .slide-leave-to {
+  transform: translateX(-100%); /* Desplaza el menú completamente fuera de la pantalla */
+}
+.slide-enter-to, .slide-leave-from {
+  transform: translateX(0); /* Restaura el menú a su posición original */
+}
+</style>
 <template>
-    <nav class="bg-blue-900">
+    <nav class="bg-blue-900 py-4">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -32,18 +44,21 @@
                 </div>
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex flex-shrink-0 items-center">
-                        <img class="h-22 w-auto" src="/img/logo-light.png"
-                            alt="Your Company">
+                        <img class="h-22 w-auto" src="/img/logo-light.png" alt="Your Company">
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-blue-900 text-white", Default: "text-blue-300 hover:bg-blue-700 hover:text-white" -->
                             <NuxtLink to="#" class="bg-blue-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                aria-current="page"> {{ $text('Home') }}</NuxtLink>
+                                aria-current="page" @click="closeMobileMenu"> {{ $text('Home') }}</NuxtLink>
                             <NuxtLink to="/archForm"
-                                class="text-blue-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Archs</NuxtLink>
+                                class="text-blue-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                @click="closeMobileMenu">
+                                Archs</NuxtLink>
                             <NuxtLink to="/arrowForm"
-                                class="text-blue-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Arrows</NuxtLink>
+                                class="text-blue-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                @click="closeMobileMenu">
+                                Arrows</NuxtLink>
 
                         </div>
                     </div>
@@ -51,24 +66,36 @@
 
             </div>
         </div>
+        <transition name="slide">
+            <!-- Mobile menu, show/hide based on menu state. -->
+            <div class="sm:hidden" id="mobile-menu" v-show="isMobileMenuOpen">
+                <div class="space-y-1 px-2 pb-3 pt-2">
+                    <!-- Current: "bg-blue-900 text-white", Default: "text-blue-300 hover:bg-blue-700 hover:text-white" -->
+                    <NuxtLink href="/" class="bg-blue-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                        aria-current="page" @click="closeMobileMenu">{{ $text('Home') }}</NuxtLink>
+                    <NuxtLink href="/featuresForm" class="bg-blue-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                        aria-current="page" @click="closeMobileMenu">{{ $text('Features') }}</NuxtLink>
+                    <NuxtLink href="/archForm"
+                        class="text-blue-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        @click="closeMobileMenu">
+                        {{ $text('bows') }}</NuxtLink>
+                    <NuxtLink href="/arrowForm"
+                        class="text-blue-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        @click="closeMobileMenu">
+                        {{ $text('Arrows') }}</NuxtLink>
 
-        <!-- Mobile menu, show/hide based on menu state. -->
-        <div class="sm:hidden" id="mobile-menu" v-show="isMobileMenuOpen">
-            <div class="space-y-1 px-2 pb-3 pt-2">
-                <!-- Current: "bg-blue-900 text-white", Default: "text-blue-300 hover:bg-blue-700 hover:text-white" -->
-                <NuxtLink href="/" class="bg-blue-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-                    aria-current="page">{{ $text('Home') }}</NuxtLink>
-                <NuxtLink href="/archForm"
-                    class="text-blue-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $text('Archs') }}</NuxtLink>
-                <NuxtLink href="/arrowForm"
-                    class="text-blue-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $text('Arrows') }}</NuxtLink>
-              
+                </div>
             </div>
-        </div>
+        </transition>
+
     </nav>
 </template>
 
 <script setup>
     import { ref } from 'vue';
     const isMobileMenuOpen = ref(false);
+    function closeMobileMenu() {
+        isMobileMenuOpen.value = false;
+    }
 </script>
+
