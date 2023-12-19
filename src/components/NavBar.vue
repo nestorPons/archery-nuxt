@@ -20,7 +20,7 @@
 </style>
 <template>
     <nav class="bg-cyan-950 py-4">
-        <div class="mx-auto max-w-lg px-2 sm:px-6 lg:px-8">
+        <div class="mx-auto  px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button-->
@@ -55,7 +55,7 @@
                         <img class="h-22 w-auto" src="/img/logo-light.png" alt="Your Company">
                     </div>
 
-                    <div class="hidden sm:ml-6 sm:block lg:flex">
+                    <div class="hidden sm:ml-6 sm:block sm:flex md:flex lg:flex">
                         <div class="m-auto ">
                             <!-- Current: "bg-cyan-950 text-white", Default: "text-blue-300 hover:bg-cyan-700 hover:text-white" -->
                             <NuxtLink to="/" class="bg-cyan-950 text-white rounded-md px-3 py-2 text-sm font-medium"
