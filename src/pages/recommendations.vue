@@ -2,24 +2,18 @@
 
     import { useLocalStorage } from '~/composables/useLocalStorage';
     import { onServerPrefetch } from 'vue'
+    import { fetchCSVData } from '~/utils/fetchData'
     let bowsLength = null
+    let spineRecurveCarbon = null
     onServerPrefetch(async () => {
-    if (process.server) {
-        try {
-            const { readFile } = require('fs/promises');
-            const path = require('path');
-            const filePath = path.resolve(__dirname, '../storage/bowLength.csv');
-            const raw = await readFile(filePath, 'utf8');
-            const rows = raw.split('\n');
-            const data = rows.map(row => row.split(','));
-            data.shift()
-            bowsLength = data
-
-        } catch (error) {
-            console.error('Error load file CSV:', error);
+        if (process.server) {
+            bowsLength = await fetchCSVData('../storage/bowLength.csv', false)
+            spineRecurveCarbon = await fetchCSVData('../storage/spineRecurveCarbon.csv')
+            console.log(spineRecurveCarbon)
         }
-    }
     })
+
+
     const recommendedPower = useLocalStorage('recommendedPower');
     const arrowLength = useLocalStorage('arrowLength');
     const recommendedArrowLegth = computed(()=>(parseFloat(arrowLength.value) + 1.44).toFixed(2))

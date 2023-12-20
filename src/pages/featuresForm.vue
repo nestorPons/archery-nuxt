@@ -1,25 +1,25 @@
 <script setup>
-import { computed, watch, ref} from 'vue';
+import { computed, watch, ref } from 'vue';
 import { useLocalStorage } from '~/composables/useLocalStorage';
 import { useNuxtApp } from '#app';
 
-const { $text } = useNuxtApp(); 
+const { $text } = useNuxtApp();
 
 const items = [{
-  label: $text('personal features'),
-  icon: 'i-heroicons-information-circle',
-  defaultOpen: true,
-  slot: 'personal'
+    label: $text('personal features'),
+    icon: 'i-heroicons-information-circle',
+    defaultOpen: false,
+    slot: 'personal'
 }, {
-  label: $text('data bow'),
-  icon: 'i-heroicons-bow',
-  defaultOpen: false,
-  slot: 'bow'
+    label: $text('data bow'),
+    icon: 'i-heroicons-bow',
+    defaultOpen: false,
+    slot: 'bow'
 }, {
-  label: $text('data arrow'),
-  icon: 'i-heroicons-eye-dropper',
-  defaultOpen: false,
-  slot: 'arrow'
+    label: $text('data arrow'),
+    icon: 'i-heroicons-eye-dropper',
+    defaultOpen: false,
+    slot: 'arrow'
 
 }]
 const age = useLocalStorage('age');
@@ -34,36 +34,34 @@ const lenghtUnit = ref(0);
 const pointWeight = useLocalStorage('pointWeight');
 const fismele = useLocalStorage('fismele');
 const level = useLocalStorage('level');
+const material = useLocalStorage('material');
 let storedArrowLength = 0.0
 const long = reactive({
     in: storedArrowLength,
     cm: (storedArrowLength * 2.54).toFixed(2)
 })
-
-
 const recommendedPower = computed(() => {
     let a = parseInt(age.value)
-    switch (true){
-        case a <= 12: 
-        return '10-15'    
+    switch (true) {
+        case a <= 12:
+            return '10-15'
         case a > 12 & a <= 15:
             return '15-20'
-            case gender.value == 2:
-                return '20-25'
-                case gender.value == 1:
-                    return '20-35'
+        case gender.value == 2:
+            return '20-25'
+        case gender.value == 1:
+            return '20-35'
         default:
             return 'S/N'
-        }
+    }
 });
-
 const recommendedLength = computed(() => bowSize(length.value));
-const recommendedFismele = computed( () => {
-    switch(bowType.value){
-        case 'recurve':     return 8.5
-        case 'longbow':     return 7
+const recommendedFismele = computed(() => {
+    switch (bowType.value) {
+        case 'recurve': return 8.5
+        case 'longbow': return 7
         case 'traditional': return 5
-        default:            return 9
+        default: return 9
     }
 })
 const computedArrowLength = computed({
@@ -87,11 +85,11 @@ const computedArrowLength = computed({
 });
 
 watch(computedArrowLength, () => {
-  localStorage.setItem('arrowLength', long.in);
+    localStorage.setItem('arrowLength', long.in);
 });
 
 watch(recommendedPower, (newValue) => {
-  localStorage.setItem('recommendedPower', newValue);
+    localStorage.setItem('recommendedPower', newValue);
 });
 
 watch(recommendedLength, (newValue) => {
@@ -117,12 +115,12 @@ const totalPower = computed((power) => {
 })
 
 onMounted(() => {
-  if (process.client) {
-    const value = localStorage.getItem('arrowLength')
-    storedArrowLength = value ? parseFloat(value).toFixed(2) : 0
-    long.in = storedArrowLength
-    long.cm = (storedArrowLength * 2.54).toFixed(2)
-  }
+    if (process.client) {
+        const value = localStorage.getItem('arrowLength')
+        storedArrowLength = value ? parseFloat(value).toFixed(2) : 0
+        long.in = storedArrowLength
+        long.cm = (storedArrowLength * 2.54).toFixed(2)
+    }
 });
 </script>
 <template>
@@ -246,43 +244,66 @@ onMounted(() => {
                         </label>
                     </div>
                     <div class="component">
-                    <div class="width-arrow">
-                        <label for="longitud" class="label">{{ $text('draw length') }}:</label>
-                        <div class="medition" @click="showHelp = !showHelp">
-                            <div class="icon-question">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                                    stroke="currentColor" class="question">
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                                </svg>
-                                <span class="text-xs flex ">{{$text('How to measure correctly')}}</span>
+                        <div class="width-arrow">
+                            <label for="longitud" class="label">{{ $text('draw length') }}:</label>
+                            <div class="medition" @click="showHelp = !showHelp">
+                                <div class="icon-question">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        strokeWidth={1.5} stroke="currentColor" class="question">
+                                        <path strokeLinecap="round" strokeLinejoin="round"
+                                            d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                    </svg>
+                                    <span class="text-xs flex ">{{ $text('How to measure correctly') }}</span>
+                                </div>
                             </div>
+                            <transition>
+                                <img v-if="showHelp" src="/img/medicion.png" />
+                            </transition>
                         </div>
-                        <transition>
-                            <img v-if="showHelp" src="/img/medicion.png" />
-                        </transition>
-                    </div>
-                    <div class="arrow-long">
-                        <input type="number" v-model="computedArrowLength" class="form-input">
-                        <div class="sel-width radio-options">
-                            <label>
-                                <input id="unit0" type="radio" name="unit-width" value="0" v-model="lenghtUnit">
-                                <span for="unit0">{{ $text('Centimeters') }}</span>
-                            </label>
-                            <label>
-                                <input id="unit1" type="radio" name="unit-width" value="1" v-model="lenghtUnit">
-                                <span for="unit1">{{ $text('Inches') }}</span>
-                            </label>
+                        <div class="arrow-long">
+                            <input type="number" v-model="computedArrowLength" class="form-input">
+                            <div class="sel-width radio-options">
+                                <label>
+                                    <input id="unit0" type="radio" name="unit-width" value="0" v-model="lenghtUnit">
+                                    <span for="unit0">{{ $text('Centimeters') }}</span>
+                                </label>
+                                <label>
+                                    <input id="unit1" type="radio" name="unit-width" value="1" v-model="lenghtUnit">
+                                    <span for="unit1">{{ $text('Inches') }}</span>
+                                </label>
+                            </div>
+                            <p class="other-unit">{{ textChangeUnit }}</p>
                         </div>
-                        <p class="other-unit">{{ textChangeUnit }}</p>
-                    </div>
 
-                </div>
+                    </div>
                     <div class="component">
                         <label>
                             <span class="label">{{ $text('arrowhead weight') }}</span>
                             <input type="number" v-model="pointWeight" class="form-input">
                         </label>
+                    </div>
+                    <div class="component">
+                        <div class="mb-3">
+                            <label class="">
+                                <span class="label">{{ $text('material') }}</span>
+                                <div class="select-container">
+                                    <select class="select form-input" v-model="material">
+                                        <option value="">{{ $text('select one element') }}</option>
+                                        <option value="carbon">{{ $text('carbon') }}</option>
+                                        <option value="alumminium">{{ $text('alumminium') }}</option>
+                                        <option value="wood">{{ $text('wood') }}</option>
+                                        <option value="traditional">{{ $text('traditional') }}</option>
+                                    </select>
+                                    <div class="select-decorator-container">
+                                        <svg class="select-decorator" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
