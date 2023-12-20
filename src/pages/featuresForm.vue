@@ -40,22 +40,6 @@ const long = reactive({
     cm: (storedArrowLength * 2.54).toFixed(2)
 })
 
-function rangeWeigth(age, gender)
-{
-    let a = parseInt(age)
-    switch (true){
-        case a <= 12: 
-        return '10-15'    
-        case a > 12 & a <= 15:
-            return '15-20'
-            case gender == 2:
-                return '20-25'
-                case gender == 1:
-                    return '20-35'
-        default:
-            return 'S/N'
-        }
-} 
 
 const recommendedPower = computed(() => {
     let a = parseInt(age.value)
@@ -72,6 +56,7 @@ const recommendedPower = computed(() => {
             return 'S/N'
         }
 });
+
 const recommendedLength = computed(() => bowSize(length.value));
 const recommendedFismele = computed( () => {
     switch(bowType.value){
@@ -110,10 +95,9 @@ watch(recommendedPower, (newValue) => {
 });
 
 watch(recommendedLength, (newValue) => {
-    localStorage.setItem('recommendedLength', newValue);
+    localStorage.setItem('recommendedBowLength', newValue);
 });
 
-const flechaRecomendada = ref(null);
 const textChangeUnit = computed(() =>
     lenghtUnit.value == 1 ?
         `${long.cm}  ${$text('centimeters')}` :
@@ -208,40 +192,6 @@ onMounted(() => {
         <template #bow>
             <div class="container">
                 <div class="component">
-                    <div class="width-arrow">
-                        <label for="longitud" class="label">{{ $text('draw length') }}:</label>
-                        <div class="medition" @click="showHelp = !showHelp">
-                            <div class="icon-question">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                                    stroke="currentColor" class="question">
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                                </svg>
-                                <span class="text-xs flex ">{{$text('How to measure correctly')}}</span>
-                            </div>
-                        </div>
-                        <transition>
-                            <img v-if="showHelp" src="/img/medicion.png" />
-                        </transition>
-                    </div>
-                    <div class="arrow-long">
-                        <input type="number" v-model="computedArrowLength" class="form-input">
-                        <div class="sel-width radio-options">
-                            <label>
-                                <input id="unit0" type="radio" name="unit-width" value="0" v-model="lenghtUnit">
-                                <span for="unit0">{{ $text('Centimeters') }}</span>
-                            </label>
-                            <label>
-                                <input id="unit1" type="radio" name="unit-width" value="1" v-model="lenghtUnit">
-                                <span for="unit1">{{ $text('Inches') }}</span>
-                            </label>
-                        </div>
-                        <p class="other-unit">{{ textChangeUnit }}</p>
-                    </div>
-
-                </div>
-
-                <div class="component">
                     <div class="mb-3">
                         <label class="">
                             <span class="label">{{ $text('modality') }}</span>
@@ -295,6 +245,39 @@ onMounted(() => {
                             <span class="caption">{{ $text('lb') }}</span>
                         </label>
                     </div>
+                    <div class="component">
+                    <div class="width-arrow">
+                        <label for="longitud" class="label">{{ $text('draw length') }}:</label>
+                        <div class="medition" @click="showHelp = !showHelp">
+                            <div class="icon-question">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                                    stroke="currentColor" class="question">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                </svg>
+                                <span class="text-xs flex ">{{$text('How to measure correctly')}}</span>
+                            </div>
+                        </div>
+                        <transition>
+                            <img v-if="showHelp" src="/img/medicion.png" />
+                        </transition>
+                    </div>
+                    <div class="arrow-long">
+                        <input type="number" v-model="computedArrowLength" class="form-input">
+                        <div class="sel-width radio-options">
+                            <label>
+                                <input id="unit0" type="radio" name="unit-width" value="0" v-model="lenghtUnit">
+                                <span for="unit0">{{ $text('Centimeters') }}</span>
+                            </label>
+                            <label>
+                                <input id="unit1" type="radio" name="unit-width" value="1" v-model="lenghtUnit">
+                                <span for="unit1">{{ $text('Inches') }}</span>
+                            </label>
+                        </div>
+                        <p class="other-unit">{{ textChangeUnit }}</p>
+                    </div>
+
+                </div>
                     <div class="component">
                         <label>
                             <span class="label">{{ $text('arrowhead weight') }}</span>

@@ -10,7 +10,7 @@
     "man": "hombre",
     "woman": "mujer",
     "recommended power": "potencia recomendada",
-    "recommended length": "tamaño de arco recomendado",
+    "recommended length": "tamaño recomendado",
     "length": "estatura",
     "span": "envergadura",
     "arrow length": "longitud de la flecha",
@@ -33,5 +33,12 @@
     "arrowhead weight": "peso de la punta",
     "draw length": "apertura",
     "How to measure correctly": "como medir correctamente",
-    "level":  "nivel"
+    "level": "nivel",
+    "config you bow": "Configure su arco y elija correctamente sus flechas",
+    "beginner": "principiante",
+    "amateur": "aficionado",
+    "recommend configuration": "configuraión recomendada",
+    "for you bow": "para tu arco",
+    "for you arrows": "para tus flechas",
+    "recommended legth": "longitud recomendada"
 }
