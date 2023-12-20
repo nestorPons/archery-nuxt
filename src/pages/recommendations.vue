@@ -1,9 +1,25 @@
 <script setup>
 
     import { useLocalStorage } from '~/composables/useLocalStorage';
-    const data = await queryContent('/src/storage/bowLegth.csv').findOne()
-    console.log(data);
+    import { onServerPrefetch } from 'vue'
+    let bowsLength = null
+    onServerPrefetch(async () => {
+    if (process.server) {
+        try {
+            const { readFile } = require('fs/promises');
+            const path = require('path');
+            const filePath = path.resolve(__dirname, '../storage/bowLength.csv');
+            const raw = await readFile(filePath, 'utf8');
+            const rows = raw.split('\n');
+            const data = rows.map(row => row.split(','));
+            data.shift()
+            bowsLength = data
 
+        } catch (error) {
+            console.error('Error load file CSV:', error);
+        }
+    }
+    })
     const recommendedPower = useLocalStorage('recommendedPower');
     const arrowLength = useLocalStorage('arrowLength');
     const recommendedArrowLegth = computed(()=>(parseFloat(arrowLength.value) + 1.44).toFixed(2))
@@ -12,8 +28,8 @@
     const recommendedBowLegth = computed(()=>{
         const span = (humanSpan.value / 2.5).toFixed(0)
         switch (true){
-            case span < 28: return '62" - 66"'
-            case span >= 28: return '66" - 70"'
+            case span < 28: return '62-66'
+            case span >= 28: return '66-70'
         }
     })
 
@@ -54,9 +70,7 @@
                 <span class="label">{{ $text('Recommended legth') }}:</span>
                 <span class="output-text">{{ recommendedBowLegth }}</span>
                 <span class="m-1">"</span>
-                <span> → </span>
-                <span class="output-text">{{ recommendedBowLegthCm }}</span>
-                <span class="m-1">cm</span>
+
             </div>
         </div>
         <div class="grouped">
