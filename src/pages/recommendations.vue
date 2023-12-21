@@ -52,7 +52,6 @@ console.log(spineRecurveCarbon)
 </style>
 <template>
     <div class="container">
-        <div>{{ spineRecurveCarbon }}</div>
         <h1 class="title">{{ $text('recommend configuration') }}</h1>
         <div class="grouped">
             <div class="title">{{ $text('for you bow') }}</div>
