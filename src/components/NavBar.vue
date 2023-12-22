@@ -102,12 +102,6 @@
                         @click="closeMobileMenu">
                         {{ $text('Features') }}
                     </NuxtLink>
-                    <NuxtLink to="/recommendations"
-                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
-                        @click="closeMobileMenu">
-                        {{ $text('recommendations') }}
-                    </NuxtLink>
-
                 </div>
             </div>
         </transition>
