@@ -94,13 +94,13 @@
                         class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
                         aria-current="page" 
                         @click="closeMobileMenu">
-                        {{ $text('Home') }}
+                        {{ $text('Data') }}
                     </NuxtLink>
-                    <NuxtLink to="/featuresForm"
+                    <NuxtLink to="/recommended"
                         class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium" 
                         aria-current="page"
                         @click="closeMobileMenu">
-                        {{ $text('Features') }}
+                        {{ $text('recommendation') }}
                     </NuxtLink>
                 </div>
             </div>

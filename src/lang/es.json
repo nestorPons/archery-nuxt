@@ -44,5 +44,7 @@
     "carbon": "carbono",
     "alumminium": "aluminio",
     "wood": "madera",
+    "data": "ingresar datos",
+    "recommendation": "valores recomendados",
     "select one element": "Seleccione un elemento"
 }
