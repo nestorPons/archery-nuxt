@@ -85,10 +85,9 @@
             <div class="sm:hidden" id="mobile-menu" v-show="isMobileMenuOpen">
                 <div class="space-y-1 px-2 pb-3 pt-2">
                     <NuxtLink to="/featuresForm"
-                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium" 
-                        aria-current="page"
+                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
                         @click="closeMobileMenu">
-                        {{ $text('Features') }}
+                        {{ $text('features') }}
                     </NuxtLink>
                     <NuxtLink to="/recommendations"
                         class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
