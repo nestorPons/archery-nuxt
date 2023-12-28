@@ -84,18 +84,22 @@
             <!-- Mobile menu, show/hide based on menu state. -->
             <div class="sm:hidden" id="mobile-menu" v-show="isMobileMenuOpen">
                 <div class="space-y-1 px-2 pb-3 pt-2">
+<<<<<<< HEAD
                     <NuxtLink to="/featuresForm"
+=======
+                    <NuxtLink to="/" 
+                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
+                        aria-current="page" 
+                        @click="closeMobileMenu">
+                        {{ $text('Data') }}
+                    </NuxtLink>
+                    <NuxtLink to="/recommended"
+>>>>>>> 3ae92dd92b73618facd26f40267251bddb426efd
                         class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium" 
                         aria-current="page"
                         @click="closeMobileMenu">
-                        {{ $text('Features') }}
+                        {{ $text('recommendation') }}
                     </NuxtLink>
-                    <NuxtLink to="/recommendations"
-                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
-                        @click="closeMobileMenu">
-                        {{ $text('recommendations') }}
-                    </NuxtLink>
-
                 </div>
             </div>
         </transition>

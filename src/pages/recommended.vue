@@ -1,16 +1,21 @@
 <script setup>
 
 import { useLocalStorage } from '~/composables/useLocalStorage';
-import { onServerPrefetch, onMounted } from 'vue'
-import { fetchCSVData } from '~/utils/fetchData'
-import { calculeCarbonRecurveSpine } from '~/utils/calculates'
-let bowsLength = null
 
-const recommendedPower = useLocalStorage('recommendedPower');
 const arrowLength = useLocalStorage('arrowLength');
-const recommendedArrowLegth = computed(() => (parseFloat(arrowLength.value) + 1.44).toFixed(2))
-const recommendedArrowLegthCm = computed(() => (parseFloat(recommendedArrowLegth.value) * 2.54).toFixed(2))
+const carbonSpines = ref([]);
+const power = useLocalStorage('power')
+const recommendedPower = useLocalStorage('recommendedPower');
 const humanSpan = useLocalStorage('span')
+
+
+onMounted(async() => {
+    const {data} = await useFetch('/api/dataCarbonRecurveSpine')
+    carbonSpines.value = data.value;
+});
+
+const recommendedArrowLegthCm = computed(() => (parseFloat(recommendedArrowLegth.value) * 2.54).toFixed(2))
+const recommendedArrowLegth = computed(() =>  (parseFloat(arrowLength.value) + 1.44).toFixed(2))
 const recommendedBowLegth = computed(() => {
     const span = (humanSpan.value / 2.5).toFixed(0)
     switch (true) {
@@ -18,11 +23,25 @@ const recommendedBowLegth = computed(() => {
         case span >= 28: return '66-70'
     }
 })
+const recommendedSpine = computed(() => {
+    const powerValue = parseInt(power.value)
+    const spanInches = arrowLength.value
+    const spanInchesRound = parseFloat(spanInches).toFixed(0)
+    if (carbonSpines.value && carbonSpines.value.length > 0) {
+        for (const item of carbonSpines.value) {
+            const split = item[""].split('-')
+            const min = parseInt(split[0])
+            const max = parseInt(split[1])
+            console.log(max, min, powerValue, spanInchesRound)
+            if( powerValue >= min && powerValue <= max){
+                console.log(item[spanInchesRound])
+                return item[spanInchesRound]
+            }
+        }
+    }
+    return 0
+})
 
-const { data } = await useFetch('/api/dataCarbonRecurveSpine')
-console.log(data.value)
-const spineRecurveCarbon = data
-console.log(spineRecurveCarbon)
 
 
 </script>
@@ -78,6 +97,11 @@ console.log(spineRecurveCarbon)
                 <span class="output-text">{{ recommendedArrowLegthCm }}</span>
                 <span class="m-1">cm</span>
 
+            </div>
+
+            <div>
+                <span class="label">{{ $text('spine') }}:</span>
+                <span class="output-text">{{ recommendedSpine }}</span>
             </div>
         </div>
     </div>
