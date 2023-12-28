@@ -125,7 +125,6 @@ onMounted(() => {
 </script>
 <template>
     <UAccordion :items="items" class="mt-1 max-w-sm m-auto my-2 bg-zinc-900">
-
         <template #personal>
             <div class="container">
                 <div class="component">

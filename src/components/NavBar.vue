@@ -47,7 +47,7 @@
 
                     <div class="hidden sm:ml-6 sm:block sm:flex md:flex lg:flex">
                         <div class="m-auto ">
-                            <NuxtLink to="/featuresForm"
+                            <NuxtLink to="/"
                                 class="text-blue-300 hover:bg-cyan-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                                 @click="closeMobileMenu">
                                 {{ $text('features') }}
@@ -73,7 +73,7 @@
         <transition name="slide">
             <div class="sm:hidden" id="mobile-menu" v-show="isMobileMenuOpen">
                 <div class="space-y-1 px-2 pb-3 pt-2">
-                    <NuxtLink to="/featuresForm"
+                    <NuxtLink to="/"
                         class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
                         @click="closeMobileMenu">
                         {{ $text('features') }}
