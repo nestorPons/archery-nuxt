@@ -30,20 +30,20 @@
                         <span class="absolute -inset-0.5"></span>
                         <span class="sr-only">Open main menu</span>
                         <!--
-                            Icon when menu is closed.
+            Icon when menu is closed.
 
-                            Menu open: "hidden", Menu closed: "block"
-                        -->
+            Menu open: "hidden", Menu closed: "block"
+          -->
                         <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                         <!--
-                            Icon when menu is open.
+            Icon when menu is open.
 
-                            Menu open: "block", Menu closed: "hidden"
-                        -->
+            Menu open: "block", Menu closed: "hidden"
+          -->
                         <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -88,8 +88,14 @@
                         class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium" 
                         aria-current="page"
                         @click="closeMobileMenu">
-                        {{ $text('recommendation') }}
+                        {{ $text('Features') }}
                     </NuxtLink>
+                    <NuxtLink to="/recommendations"
+                        class="bg-cyan-950 text-white block rounded-md px-3 py-2 text-base font-medium"
+                        @click="closeMobileMenu">
+                        {{ $text('recommendations') }}
+                    </NuxtLink>
+
                 </div>
             </div>
         </transition>
